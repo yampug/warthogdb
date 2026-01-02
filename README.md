@@ -10,7 +10,13 @@
 
 WarthogDB is a fast and simple embedded key-value store written in Zig. It is suitable for IO bound workloads, and is capable of handling high throughput reads and writes at submillisecond latencies.
 
-Basic design principles employed in WarthogDB are not new. At its core it started as a rewrite of Yahoo's [HaloDB](https://github.com/yahoo/HaloDB), a fast and simple embedded key-value store written in Java, in Zig. Zig was chosen for its speed and protability across different platforms and languages with its native support for building C APIs.
+Basic design principles employed in WarthogDB are not new. At its core it started as a rewrite of Yahoo's [HaloDB](https://github.com/yahoo/HaloDB), which is a fast and simple embedded key-value store written in Java. 
+
+Zig was chosen for WarthogDB for:
+* its speed 
+* portability across different platforms and languages 
+* native support for building C APIs
+* overcoming limitations imposed by the JVM on the original HaloDB
 
 ## Basic Operations
 ```zig
