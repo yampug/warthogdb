@@ -6,7 +6,7 @@
   </picture>
 </p>
 
-[![License](https://img.shields.io/badge/license-MIT-green?labelColor=gray)](LICENSE.md)
+[![License](https://img.shields.io/badge/license-APACHE-green?labelColor=gray)](LICENSE.md)
 
 WarthogDB is a fast and simple embedded key-value store written in Zig. It is suitable for IO bound workloads, and is capable of handling high throughput reads and writes at submillisecond latencies.
 
