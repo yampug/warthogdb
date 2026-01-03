@@ -1,0 +1,49 @@
+version: '3'
+
+vars:
+  # Detect OS and set library extension
+  SHARED_EXT:
+    sh: |
+      if [ "$(uname)" = "Darwin" ]; then
+        echo "dylib"
+      else
+        echo "so"
+      fi
+  STATIC_EXT: "a"
+
+tasks:
+  shared:
+    desc: Build shared library (libwarthogdb.dylib on macOS, .so on Linux)
+    cmds:
+      - zig build -Doptimize=ReleaseFast
+      - |
+        echo "Built shared library:"
+        ls -lh zig-out/lib/libwarthogdb.{{.SHARED_EXT}}
+    sources:
+      - src/**/*.zig
+      - build.zig
+    generates:
+      - zig-out/lib/libwarthogdb.{{.SHARED_EXT}}
+
+  static:
+    desc: Build static library (libwarthogdb.a)
+    cmds:
+      - zig build-lib src/c_api.zig -static -O ReleaseFast -fPIC --name warthogdb -femit-bin=zig-out/lib/libwarthogdb.a
+      - |
+        echo "Built static library:"
+        ls -lh zig-out/lib/libwarthogdb.a
+    sources:
+      - src/**/*.zig
+    generates:
+      - zig-out/lib/libwarthogdb.a
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - rm -rf zig-out .zig-cache
+
+  all:
+    desc: Build both shared and static libraries
+    deps:
+      - shared
+      - static
