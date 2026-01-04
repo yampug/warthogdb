@@ -45,7 +45,7 @@ pub const WarthogDB = struct {
     sequence_number: u64 = 0,
 
     pub fn init(allocator: Allocator, dir_path: []const u8, options: WarthogDBOptions) !WarthogDB {
-        const dir = try std.fs.cwd().openDir(dir_path, .{});
+        const dir = try std.fs.cwd().openDir(dir_path, .{ .iterate = true });
 
         const lock_path = try std.fs.path.join(allocator, &[_][]const u8{ dir_path, "LOCK" });
         defer allocator.free(lock_path);

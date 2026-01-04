@@ -15,7 +15,7 @@ pub const LogFile = struct {
     full_path: []u8,
     dir: std.fs.Dir,
 
-    mem_map: ?[]align(16384) u8,
+    mem_map: ?[]align(std.heap.page_size_min) u8,
 
     // Write Buffer
     write_buffer: []u8,
@@ -44,7 +44,7 @@ pub const LogFile = struct {
         }
 
         // Try to mmap if reading existing file
-        var map: ?[]align(16384) u8 = null;
+        var map: ?[]align(std.heap.page_size_min) u8 = null;
         if (!create) {
             const size = stat.size;
             if (size > 0) {
